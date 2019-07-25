@@ -1,0 +1,14 @@
+/Users/yogeshjadhav/Documents/Projects/Player-Service/bin/Debug/netcoreapp2.2/Player-Service.deps.json
+/Users/yogeshjadhav/Documents/Projects/Player-Service/bin/Debug/netcoreapp2.2/Player-Service.runtimeconfig.json
+/Users/yogeshjadhav/Documents/Projects/Player-Service/bin/Debug/netcoreapp2.2/Player-Service.runtimeconfig.dev.json
+/Users/yogeshjadhav/Documents/Projects/Player-Service/bin/Debug/netcoreapp2.2/Player-Service.dll
+/Users/yogeshjadhav/Documents/Projects/Player-Service/bin/Debug/netcoreapp2.2/Player-Service.pdb
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.csprojAssemblyReference.cache
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.csproj.CoreCompileInputs.cache
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.RazorAssemblyInfo.cache
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.RazorAssemblyInfo.cs
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.AssemblyInfoInputs.cache
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.AssemblyInfo.cs
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.RazorTargetAssemblyInfo.cache
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.dll
+/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/Debug/netcoreapp2.2/Player-Service.pdb
