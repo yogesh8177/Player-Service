@@ -31,7 +31,7 @@ namespace Player_Service
             services.Configure<PlayerStoreDatabaseSettings>(
             Configuration.GetSection(nameof(PlayerStoreDatabaseSettings)));
 
-            services.AddSingleton<PlayerStoreDatabaseSettings>(sp =>
+            services.AddSingleton<IPlayerServiceDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<PlayerStoreDatabaseSettings>>().Value);
 
             services.AddSingleton<UserService>();

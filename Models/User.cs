@@ -13,6 +13,7 @@ namespace Player_Service.Models
         [JsonProperty("Name")]
         public string UserName { get; set; }
 
+        public string Email { get; set; }
         public string Password { get; set; }
         public int Purchases { get; set; }
 
