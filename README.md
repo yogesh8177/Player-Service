@@ -1,5 +1,7 @@
 # Player-Service
 
+This is a top level architecture for a player notification service. Below sections describe the given architecture diagram in detail.
+
 # Architecture Diagram
 
 <img src="./diagrams/Player-Notification-Architecture.jpg">
