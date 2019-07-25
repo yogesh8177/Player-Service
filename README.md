@@ -42,4 +42,8 @@ Admin services will talk with our `primary db` and other `third party services`.
 
 ### SendBird
 
+This service is used for realtime chat with other players. In our case this will be used to communicate our message to respective userswho fit the required criteria.
+
 ### OneSignal
+
+This service will help in sending notifications via best effort mechanism.
