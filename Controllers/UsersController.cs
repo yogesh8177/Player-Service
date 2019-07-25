@@ -14,9 +14,9 @@ namespace Player_Service.Controllers
     {
         private readonly UserService _userService;
 
-        public UsersController(UserService context)
+        public UsersController(UserService service)
         {
-            _userService = context;
+            _userService = service;
         }
 
         // GET: api/user

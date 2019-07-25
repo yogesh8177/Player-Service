@@ -10,6 +10,15 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
+    <PackageReference Include="OneSignal.AspNet.Core.SDK" Version="1.0.0-RC" />
   </ItemGroup>
+  <ItemGroup>
+  <Reference Include="SendBird">
+    <HintPath>lib\SendBird.dll</HintPath>
+  </Reference>
+  <Reference Include="SendBirdWebSocket">
+    <HintPath>lib\websocket-sharp.dll</HintPath>
+  </Reference>
+</ItemGroup>
 
 </Project>
