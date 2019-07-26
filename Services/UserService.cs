@@ -26,8 +26,17 @@ namespace Player_Service.Services {
             return user;
         }
 
-        public void Update(string id, User userIn) =>
-            _users.ReplaceOne(user => user.Id == id, userIn);
+        public UpdateResult Update(string id, User userIn) {
+            var updateDef = Builders<User>.Update
+                            .Set("UserName", userIn.UserName)
+                            .Set("Email", userIn.Email)
+                            .Set("Level", userIn.Level)
+                            .Set("Purchases", userIn.Purchases)
+                            .Set("Device", userIn.Device)
+                            .Set("Password", userIn.Password);
+            return _users.UpdateOne(user => user.Id == id, updateDef);
+        }
+           
 
         public void Remove(string id) => 
             _users.DeleteOne(user => user.Id == id);

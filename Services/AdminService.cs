@@ -26,8 +26,13 @@ namespace Player_Service.Services {
             return admin;
         }
 
-        public void Update(string id, Admin userIn) =>
-            _admins.ReplaceOne(admin => admin.Id == id, userIn);
+        public UpdateResult Update(string id, Admin adminIn) {
+            var updateDef = Builders<Admin>.Update
+                            .Set("UserName", adminIn.UserName)
+                            .Set("Email", adminIn.Email)
+                            .Set("Password", adminIn.Password);
+            return _admins.UpdateOne(admin => admin.Id == id, updateDef);
+        }
 
         public void Remove(string id) => 
             _admins.DeleteOne(admin => admin.Id == id);

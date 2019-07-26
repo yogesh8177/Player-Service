@@ -17,8 +17,8 @@ namespace Player_Service.Models
         public string Password { get; set; }
         public int Purchases { get; set; }
 
-        public int level { get; set; }
+        public int Level { get; set; }
 
-        public string device { get; set; }
+        public string Device { get; set; }
     }
 }
