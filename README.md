@@ -24,7 +24,7 @@ There is one more component for caching player profile data. Whenever we request
 
 ### Registration Service
 
-This service will help us register new users.
+This service will help us register new users. Once we register a new user, we also need to register this user with our third party apis like `SendBird` and `OneSignal` for chat and notification services.
 
 ## Admin facing components
 
@@ -47,3 +47,11 @@ This service is used for realtime chat with other players. In our case this will
 ### OneSignal
 
 This service will help in sending notifications via best effort mechanism.
+
+## Steps to run
+
+1. `cd $PROJECT_ROOT`
+1. Create `.env` file based on env.example file
+1. `docker-compose up -d`
+1. `docker-compose logs -f web` to follow logs for web service (its a monolith for now, will transition it into microservices as per the diagram).
+1. `docker-compose down` to stop the service.
