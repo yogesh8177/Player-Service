@@ -35,6 +35,8 @@ namespace Player_Service
                 sp.GetRequiredService<IOptions<PlayerStoreDatabaseSettings>>().Value);
 
             services.AddSingleton<UserService>();
+            services.AddSingleton<OneSignalService>();
+            services.AddSingleton<SendBirdService>();
 
             services.AddMvc()
             .AddJsonOptions(options => options.UseMemberCasing())
