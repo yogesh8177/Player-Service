@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "c7ee97c2d12205a5151f255d5b8f51d5fd09cbf9"
+    "signature": "ffc224bdb2e87ffb9387daa2a98df271b5c563bd"
   },
   "compilationOptions": {
     "defines": [
@@ -26,8 +26,12 @@
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
+          "Microsoft.Extensions.Configuration.UserSecrets": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
-          "MongoDB.Driver": "2.8.1"
+          "MongoDB.Driver": "2.8.1",
+          "OneSignal.AspNet.Core.SDK": "1.0.0-RC",
+          "SendBird": "3.0.13.0",
+          "websocket-sharp": "1.0.3.19398"
         },
         "runtime": {
           "Player-Service.dll": {}
@@ -114,6 +118,46 @@
         },
         "compile": {
           "lib/netstandard1.5/MongoDB.Driver.Core.dll": {}
+        }
+      },
+      "OneSignal.AspNet.Core.SDK/1.0.0-RC": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3",
+          "RestSharp.NetCore": "105.2.4-rc4-24214-01"
+        },
+        "runtime": {
+          "lib/netstandard1.6/OneSignal.AspNet.Core.SDK.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/OneSignal.AspNet.Core.SDK.dll": {}
+        }
+      },
+      "RestSharp.NetCore/105.2.4-rc4-24214-01": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Collections.Specialized": "4.3.0",
+          "System.ComponentModel.TypeConverter": "4.1.0",
+          "System.Net.Requests": "4.0.11",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Runtime.Serialization.Formatters": "4.3.0",
+          "System.Runtime.Serialization.Primitives": "4.3.0",
+          "System.Runtime.Serialization.Xml": "4.3.0",
+          "System.Xml.XmlSerializer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/RestSharp.NetCore.dll": {
+            "assemblyVersion": "105.2.3.0",
+            "fileVersion": "105.2.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/RestSharp.NetCore.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -347,6 +391,33 @@
           }
         }
       },
+      "System.Net.Requests/4.0.11": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.2.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.0.1",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
       "System.Net.Security/4.3.2": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
@@ -389,6 +460,14 @@
           }
         }
       },
+      "System.Net.WebHeaderCollection/4.0.1": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
+        }
+      },
       "System.Runtime.Serialization.Formatters/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -424,6 +503,28 @@
         "dependencies": {
           "System.Runtime": "4.3.0",
           "System.Runtime.Handles": "4.3.0"
+        }
+      },
+      "SendBird/3.0.13.0": {
+        "runtime": {
+          "SendBird.dll": {
+            "assemblyVersion": "3.0.13.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "compile": {
+          "SendBird.dll": {}
+        }
+      },
+      "websocket-sharp/1.0.3.19398": {
+        "runtime": {
+          "websocket-sharp.dll": {
+            "assemblyVersion": "1.0.3.19398",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "compile": {
+          "websocket-sharp.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3618,6 +3719,20 @@
       "path": "mongodb.driver.core/2.8.1",
       "hashPath": "mongodb.driver.core.2.8.1.nupkg.sha512"
     },
+    "OneSignal.AspNet.Core.SDK/1.0.0-RC": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JXK1AdLy/E6Nc5M/mKFKhjcblt5si++bPp84Fj3OREnBgu7kQr/ys9oOF70Axmg6LqAjXiOHP3IbXr29ccMjtQ==",
+      "path": "onesignal.aspnet.core.sdk/1.0.0-rc",
+      "hashPath": "onesignal.aspnet.core.sdk.1.0.0-rc.nupkg.sha512"
+    },
+    "RestSharp.NetCore/105.2.4-rc4-24214-01": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RZhBsxp1ggRtvcdldioxLqIyVCu5NgjnawDewT/eUqweNj1kGn585WztZ3Cj2BADgi9J9dIV4kW/t8zba56LlQ==",
+      "path": "restsharp.netcore/105.2.4-rc4-24214-01",
+      "hashPath": "restsharp.netcore.105.2.4-rc4-24214-01.nupkg.sha512"
+    },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
       "type": "package",
       "serviceable": true,
@@ -3751,12 +3866,26 @@
       "path": "system.net.nameresolution/4.3.0",
       "hashPath": "system.net.nameresolution.4.3.0.nupkg.sha512"
     },
+    "System.Net.Requests/4.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vxGt7C0cZixN+VqoSW4Yakc1Y9WknmxauDqzxgpw/FnBdz4kQNN51l4wxdXX5VY1xjqy//+G+4CvJWp1+f+y6Q==",
+      "path": "system.net.requests/4.0.11",
+      "hashPath": "system.net.requests.4.0.11.nupkg.sha512"
+    },
     "System.Net.Security/4.3.2": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-xT2jbYpbBo3ha87rViHoTA6WdvqOAW37drmqyx/6LD8p7HEPT2qgdxoimRzWtPg8Jh4X5G9BV2seeTv4x6FYlA==",
       "path": "system.net.security/4.3.2",
       "hashPath": "system.net.security.4.3.2.nupkg.sha512"
+    },
+    "System.Net.WebHeaderCollection/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XX2TIAN+wBSAIV51BU2FvvXMdstUa8b0FBSZmDWjZdwUMmggQSifpTOZ5fNH20z9ZCg2fkV1L5SsZnpO2RQDRQ==",
+      "path": "system.net.webheadercollection/4.0.1",
+      "hashPath": "system.net.webheadercollection.4.0.1.nupkg.sha512"
     },
     "System.Runtime.Serialization.Formatters/4.3.0": {
       "type": "package",
@@ -3778,6 +3907,16 @@
       "sha512": "sha512-k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
       "path": "system.threading.threadpool/4.3.0",
       "hashPath": "system.threading.threadpool.4.3.0.nupkg.sha512"
+    },
+    "SendBird/3.0.13.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "websocket-sharp/1.0.3.19398": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/Users/yogeshjadhav/Documents/Projects/Player-Service/Player-Service.csproj": {}
+    "/app/Player-Service.csproj": {}
   },
   "projects": {
-    "/Users/yogeshjadhav/Documents/Projects/Player-Service/Player-Service.csproj": {
+    "/app/Player-Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/yogeshjadhav/Documents/Projects/Player-Service/Player-Service.csproj",
+        "projectUniqueName": "/app/Player-Service.csproj",
         "projectName": "Player-Service",
-        "projectPath": "/Users/yogeshjadhav/Documents/Projects/Player-Service/Player-Service.csproj",
-        "packagesPath": "/Users/yogeshjadhav/.nuget/packages/",
-        "outputPath": "/Users/yogeshjadhav/Documents/Projects/Player-Service/obj/",
+        "projectPath": "/app/Player-Service.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/app/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/yogeshjadhav/.nuget/NuGet/NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
@@ -47,6 +47,10 @@
             },
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Configuration.UserSecrets": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
