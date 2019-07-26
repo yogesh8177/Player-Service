@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Player_Service.Models;
@@ -39,10 +37,10 @@ namespace Player_Service.Controllers
         }
 
         [HttpPost]
-        public ActionResult<User> Create(User user)
+        public async Task<IActionResult> Create(User user)
         {
-            _userService.Create(user);
-
+            await _userService.CreateAsync(user);
+    
             return CreatedAtRoute("GetUser", new { id = user.Id.ToString() }, user);
         }
 
