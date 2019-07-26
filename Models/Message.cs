@@ -13,8 +13,6 @@ namespace Player_Service.Models
 
         public string Sender { get; set; }
 
-        public string System { get; set; }
-
         public bool Inbox { get; set; }
 
         public bool Chat { get; set; }

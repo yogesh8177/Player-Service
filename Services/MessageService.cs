@@ -30,7 +30,6 @@ namespace Player_Service.Services {
             var updateDef = Builders<Message>.Update
                             .Set("Text", messageIn.Text)
                             .Set("Sender", messageIn.Sender)
-                            .Set("System", messageIn.System)
                             .Set("Chat", messageIn.Chat)
                             .Set("Notification", messageIn.Notification);
             return _messages.UpdateOne(Message => Message.Id == id, updateDef);
