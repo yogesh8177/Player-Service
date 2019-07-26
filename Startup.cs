@@ -34,6 +34,7 @@ namespace Player_Service
             services.AddSingleton<IPlayerServiceDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<PlayerStoreDatabaseSettings>>().Value);
 
+            services.AddSingleton<AdminService>();
             services.AddSingleton<UserService>();
             services.AddSingleton<OneSignalService>();
             services.AddSingleton<SendBirdService>();
