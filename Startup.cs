@@ -36,6 +36,7 @@ namespace Player_Service
 
             services.AddSingleton<AdminService>();
             services.AddSingleton<UserService>();
+            services.AddSingleton<MessageService>();
             services.AddSingleton<OneSignalService>();
             services.AddSingleton<SendBirdService>();
 
