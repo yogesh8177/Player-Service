@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace Player_Service.Services {
     public class UserService {
         private readonly IMongoCollection<User> _users;
-
+        private readonly string sendBirdUrl = Environment.GetEnvironmentVariable("SENDBIRD_API_REQUEST_URL");
+        private readonly string oneSignalUrl = Environment.GetEnvironmentVariable("ONESIGNAL_DEVICE_REGISTER_URL");
         public UserService(IPlayerServiceDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
@@ -46,17 +47,18 @@ namespace Player_Service.Services {
                 request.profile_url = ""; // hard coding image url!!!
                 request.issue_access_token = true;
         
-                string sendBirdUrl = Environment.GetEnvironmentVariable("SENDBIRD_API_REQUEST_URL") + "/v3/users";
-                var sendbirdResponse = await client.PostAsJsonAsync<SendBirdUserPayload>(sendBirdUrl, request);
-                string Content = "";
+                // string sendBirdUrl = Environment.GetEnvironmentVariable("SENDBIRD_API_REQUEST_URL") + "/v3/users";
+                var sendbirdResponse = await client.PostAsJsonAsync<SendBirdUserPayload>(sendBirdUrl + "/v3/users", request);
+                string Content = sendbirdResponse.Content.ReadAsStringAsync().Result;
                 if (sendbirdResponse.IsSuccessStatusCode) {
-                    Content = sendbirdResponse.Content.ReadAsStringAsync().Result;
                     var jsonResponse = JsonConvert.DeserializeObject<SendBirdRegistrationResponse>(Content);
-                    string access_token = jsonResponse.access_token;
+                    string accessToken = jsonResponse.access_token;
+                    string channelUrl = await this.createAdminChatChannelAsync(user);
                     user.Integrations = new MongoDB.Bson.BsonDocument {
                         { 
                             "sendBird", new MongoDB.Bson.BsonDocument {
-                                { "access_token", access_token }
+                                { "access_token", accessToken },
+                                { "system_channel_url", channelUrl }
                             } 
                         }
                     };
@@ -68,10 +70,37 @@ namespace Player_Service.Services {
             return user;
         }
 
+        private async Task<string> createAdminChatChannelAsync (User user) {
+            string channelUrl = "";
+            using (HttpClient client = new HttpClient()) {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Api-Token", Environment.GetEnvironmentVariable("SENDBIRD_API_TOKEN"));
+
+                string inviterUserId = Environment.GetEnvironmentVariable("SYSTEM_ADMIN_USER_ID");
+                var request = new SendBirdGroupRequest();
+                request.name = "System Channel";
+                request.custom_type = "System";
+                request.inviter_id = inviterUserId;
+                request.user_ids = new List<string>() { inviterUserId, user.Id.ToString() };
+                
+                var sendbirdResponse = await client.PostAsJsonAsync<SendBirdGroupRequest>(sendBirdUrl + "/v3/group_channels", request);
+
+                string Content = sendbirdResponse.Content.ReadAsStringAsync().Result;
+                if (sendbirdResponse.IsSuccessStatusCode) {
+                    var jsonResponse = JsonConvert.DeserializeObject<SendBirdGroupResponse>(Content);
+                    channelUrl = jsonResponse.channel_url;
+                }
+                else {
+                    // Lets not handle this for now
+                    Console.WriteLine("Error" + Content);
+                }
+            }
+            return channelUrl;
+        }
+
         private async Task<User> registerOneSignalAsync(User user) {
             using (var client = new HttpClient()) {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                string oneSignalUrl = Environment.GetEnvironmentVariable("ONESIGNAL_DEVICE_REGISTER_URL");
                 OneSignalRegisterPayload oneSignalRequest = new OneSignalRegisterPayload();
                 oneSignalRequest.app_id = Environment.GetEnvironmentVariable("ONESIGNAL_APP_ID");
                 oneSignalRequest.device_type = user.Device == "android" ? (int) OneSignalDevices.ANDROID : (int) OneSignalDevices.iOS;
