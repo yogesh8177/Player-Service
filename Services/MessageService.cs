@@ -6,9 +6,17 @@ using System.Linq;
 namespace Player_Service.Services {
     public class MessageService {
         private readonly IMongoCollection<Message> _messages;
+        private readonly SendBirdService _chatService;
+        private readonly OneSignalService _notificationService;
 
-        public MessageService(IPlayerServiceDatabaseSettings settings)
+        public MessageService(
+            IPlayerServiceDatabaseSettings settings,
+            SendBirdService chatService,
+            OneSignalService notificationService
+        )
         {
+            this._chatService = chatService;
+            this._notificationService = notificationService;
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 

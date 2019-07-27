@@ -13,10 +13,14 @@ namespace Player_Service.Controllers
     public class MessageController : ControllerBase
     {
         private readonly MessageService _messageService;
+        private readonly OneSignalService _notificationService;
+        private readonly SendBirdService _chatService;
 
-        public MessageController(MessageService service)
+        public MessageController(MessageService service, OneSignalService notificationService, SendBirdService chatService)
         {
             _messageService = service;
+            _notificationService = notificationService;
+            _chatService = chatService;
         }
 
         // GET: api/message
@@ -42,7 +46,9 @@ namespace Player_Service.Controllers
         public ActionResult<Message> Create(Message message)
         {
             _messageService.Create(message);
-
+            if (message.Notification)
+                _notificationService.createNotification(new List<string>() { "All" }, new List<string> {}, message.Text);
+                
             return CreatedAtRoute("GetMessage", new { id = message.Id.ToString() }, message);
         }
 
