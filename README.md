@@ -55,3 +55,5 @@ This service will help in sending notifications via best effort mechanism.
 1. `docker-compose up -d`
 1. `docker-compose logs -f web` to follow logs for web service (its a monolith for now, will transition it into microservices as per the diagram).
 1. `docker-compose down` to stop the service.
+
+> Note: You might need to run `sudo docker-compose up -d` or run using account having appropriate permissions if you encounter operation not permitted/allowed error from mongodb driver
