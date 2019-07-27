@@ -15,12 +15,20 @@ namespace Player_Service.Controllers
         private readonly MessageService _messageService;
         private readonly OneSignalService _notificationService;
         private readonly SendBirdService _chatService;
+        private readonly  UserService _userService;
 
-        public MessageController(MessageService service, OneSignalService notificationService, SendBirdService chatService)
+        public MessageController(
+            MessageService service, 
+            OneSignalService notificationService, 
+            SendBirdService chatService,
+            UserService userService
+        )
         {
             _messageService = service;
             _notificationService = notificationService;
             _chatService = chatService;
+            _userService = userService;
+
         }
 
         // GET: api/message
@@ -43,12 +51,28 @@ namespace Player_Service.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Message> Create(Message message)
+        public async Task<ActionResult<Message>> CreateAsync(Message message)
         {
             _messageService.Create(message);
-            if (message.Notification)
-                _notificationService.createNotification(new List<string>() { "All" }, new List<string> {}, message.Text);
-                
+            List<User> users = await _userService.GetUsersViaConditionsAsync(message.QueryConditions);
+            Console.WriteLine("total users" + users.Count);
+            if (message.Notification) {
+                List<string> oneSignalIds = new List<string>();
+                foreach (var u in users) {
+                    var sendBirdObject = u.Integrations[0].AsBsonDocument;
+                    var oneSignalObject = u.Integrations[1].AsBsonDocument;
+    
+                    var oneSignalId = oneSignalObject.Elements.First().Value;
+                    var channelUrl = sendBirdObject.Elements.Last().Value;
+                    
+                    oneSignalIds.Add(oneSignalId.ToString());
+                    Console.WriteLine("oneSignalId", oneSignalId);
+                    if (message.Chat) {
+                        _chatService.sendSystemChatMessage(u.Id.ToString(), channelUrl.ToString(), message.Text);
+                    }
+                }
+                _notificationService.createNotification(new List<string>() { "All" }, oneSignalIds, message.Text);
+            }     
             return CreatedAtRoute("GetMessage", new { id = message.Id.ToString() }, message);
         }
 

@@ -18,5 +18,7 @@ namespace Player_Service.Models
         public bool Chat { get; set; }
 
         public bool Notification { get; set; }
+
+        public string QueryConditions { get; set; }
     }
 }

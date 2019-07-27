@@ -39,7 +39,8 @@ namespace Player_Service.Services {
                             .Set("Text", messageIn.Text)
                             .Set("Sender", messageIn.Sender)
                             .Set("Chat", messageIn.Chat)
-                            .Set("Notification", messageIn.Notification);
+                            .Set("Notification", messageIn.Notification)
+                            .Set("QueryConditions", messageIn.QueryConditions);
             return _messages.UpdateOne(Message => Message.Id == id, updateDef);
         }
 
