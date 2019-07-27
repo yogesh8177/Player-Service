@@ -6,16 +6,17 @@ using System;
 namespace Player_Service.Services {
     public class OneSignalService {
         private readonly OneSignalClient client;
-
         public OneSignalService () {
             client = new OneSignalClient(Environment.GetEnvironmentVariable("ONESIGNAL_API_KEY"));
         }
 
-        public NotificationCreateResult createNotification (List<string> TargetSegments, string message) {
+        public NotificationCreateResult createNotification (List<string> TargetSegments, List<string> TargetPlayerIds, string message) {
             var options = new NotificationCreateOptions();
             options.AppId = System.Guid.Parse(Environment.GetEnvironmentVariable("ONESIGNAL_APP_ID"));
             options.IncludedSegments = TargetSegments;
-            options.Contents.Add("Message", message);
+            options.IncludePlayerIds = TargetPlayerIds;
+            options.Data = new Dictionary<string, string>() { {"message", message} };
+            options.Contents.Add("en", message);
 
             return client.Notifications.Create(options);
         }

@@ -111,7 +111,7 @@ namespace Player_Service.Services {
                     var jsonResponse = JsonConvert.DeserializeObject<OneSignalRegistrationResponse>(Content);
                     if (jsonResponse.success) {
                         string id = jsonResponse.id;
-                        user.Integrations.Add("OneSignal", new MongoDB.Bson.BsonDocument { { "notification_id", id } });
+                        user.Integrations.Add("OneSignal", new MongoDB.Bson.BsonDocument { { "onesignal_id", id } });
                         this.Update(user.Id.ToString(), user);
                     }
                 }
