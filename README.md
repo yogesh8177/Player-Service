@@ -57,3 +57,13 @@ This service will help in sending notifications via best effort mechanism.
 1. `docker-compose down` to stop the service.
 
 > Note: You might need to run `sudo docker-compose up -d` or run using account having appropriate permissions if you encounter operation not permitted/allowed error from mongodb driver
+
+## Dynamic query builder
+
+We want a `liveops` person to be able to dynamically query data. Thus, we have a dynamic query builder using expression tree in `C#`.
+The format for the end user to submit dynamic query is as follows:
+
+```
+Device = android and Purchases > 5 and Level >= 10
+```
+> Notice that here the rule is every word (token) must be space separated. Only single line queries are supported.
