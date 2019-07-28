@@ -27,14 +27,16 @@ namespace Player_Service.Services {
             _users.Find<User>(user => user.Id == id).FirstOrDefault();
 
         public async Task<List<User>> GetUsersViaConditionsAsync(string conditions) {
-            var jsonObject = JsonConvert.DeserializeObject<User>(conditions);
-                
-            FilterDefinition<User> query = Builders<User>.Filter.Eq(user => user.Device, jsonObject.Device)
-                                            & Builders<User>.Filter.Eq(user => user.Level, jsonObject.Level)
-                                            & Builders<User>.Filter.Eq(user => user.Purchases, jsonObject.Purchases);
+            //var jsonObject = JsonConvert.DeserializeObject<User>(conditions);
+            QueryParser parser = new QueryParser();
+            // FilterDefinition<User> query = Builders<User>.Filter.Eq(user => user.Device, jsonObject.Device)
+            //                                 & Builders<User>.Filter.Eq(user => user.Level, jsonObject.Level)
+            //                                 & Builders<User>.Filter.Eq(user => user.Purchases, jsonObject.Purchases);
                                            
+            // IAsyncCursor<User> usersCursor = await _users.FindAsync(filter: query, options: null);
+            var query = parser.buildQuery(conditions);
+            
             IAsyncCursor<User> usersCursor = await _users.FindAsync(filter: query, options: null);
-
             return await usersCursor.ToListAsync<User>();
         }
         public async Task<User> CreateAsync(User user)

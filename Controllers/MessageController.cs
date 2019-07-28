@@ -56,25 +56,31 @@ namespace Player_Service.Controllers
             _messageService.Create(message);
             List<User> users = await _userService.GetUsersViaConditionsAsync(message.QueryConditions);
             Console.WriteLine("total users" + users.Count);
-            if (message.Notification) {
-                List<string> oneSignalIds = new List<string>();
-                foreach (var u in users) {
-                    var sendBirdObject = u.Integrations[0].AsBsonDocument;
-                    var oneSignalObject = u.Integrations[1].AsBsonDocument;
-    
-                    string oneSignalId = oneSignalObject.Elements.First().Value.ToString();
-                    string channelUrl = sendBirdObject.Elements.Last().Value.ToString();
-                    string userAccessToken = sendBirdObject.Elements.First().Value.ToString();
-                    Console.WriteLine("userAccessToken " + userAccessToken);
-                    
-                    oneSignalIds.Add(oneSignalId);
-                    if (message.Chat) {
-                        await _chatService.sendSystemChatMessageAsync(channelUrl, message.Text);
+            if (users.Count > 0) {
+                if (message.Notification) {
+                    List<string> oneSignalIds = new List<string>();
+                    foreach (var u in users) {
+                        var sendBirdObject = u.Integrations[0].AsBsonDocument;
+                        var oneSignalObject = u.Integrations[1].AsBsonDocument;
+        
+                        string oneSignalId = oneSignalObject.Elements.First().Value.ToString();
+                        string channelUrl = sendBirdObject.Elements.Last().Value.ToString();
+                        string userAccessToken = sendBirdObject.Elements.First().Value.ToString();
+                        Console.WriteLine("userAccessToken " + userAccessToken);
+                        
+                        oneSignalIds.Add(oneSignalId);
+                        if (message.Chat) {
+                            await _chatService.sendSystemChatMessageAsync(channelUrl, message.Text);
+                        }
                     }
-                }
-                var result = _notificationService.createNotificationAsync(oneSignalIds, message.Text);
-                Console.Write("notification result " + result);
-            }     
+                    var result = _notificationService.createNotificationAsync(oneSignalIds, message.Text);
+                    Console.Write("notification result " + result);
+                } 
+            }
+            else {
+                // no users that exists in the given criteria
+                // maybe we can schedule a job based on message id at a lateral point to deliver this message.
+            } 
             return CreatedAtRoute("GetMessage", new { id = message.Id.ToString() }, message);
         }
 
