@@ -62,16 +62,18 @@ namespace Player_Service.Controllers
                     var sendBirdObject = u.Integrations[0].AsBsonDocument;
                     var oneSignalObject = u.Integrations[1].AsBsonDocument;
     
-                    var oneSignalId = oneSignalObject.Elements.First().Value;
-                    var channelUrl = sendBirdObject.Elements.Last().Value;
+                    string oneSignalId = oneSignalObject.Elements.First().Value.ToString();
+                    string channelUrl = sendBirdObject.Elements.Last().Value.ToString();
+                    string userAccessToken = sendBirdObject.Elements.First().Value.ToString();
+                    Console.WriteLine("userAccessToken " + userAccessToken);
                     
-                    oneSignalIds.Add(oneSignalId.ToString());
-                    Console.WriteLine("oneSignalId", oneSignalId);
+                    oneSignalIds.Add(oneSignalId);
                     if (message.Chat) {
-                        _chatService.sendSystemChatMessage(u.Id.ToString(), channelUrl.ToString(), message.Text);
+                        await _chatService.sendSystemChatMessageAsync(channelUrl, message.Text);
                     }
                 }
-                _notificationService.createNotification(new List<string>() { "All" }, oneSignalIds, message.Text);
+                var result = _notificationService.createNotificationAsync(oneSignalIds, message.Text);
+                Console.Write("notification result " + result);
             }     
             return CreatedAtRoute("GetMessage", new { id = message.Id.ToString() }, message);
         }

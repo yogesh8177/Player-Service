@@ -1,24 +1,35 @@
-using OneSignal.AspNet.Core.SDK;
-using OneSignal.AspNet.Core.SDK.Resources.Notifications;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Player_Service.Services {
     public class OneSignalService {
-        private readonly OneSignalClient client;
         public OneSignalService () {
-            client = new OneSignalClient(Environment.GetEnvironmentVariable("ONESIGNAL_API_KEY"));
         }
 
-        public NotificationCreateResult createNotification (List<string> TargetSegments, List<string> TargetPlayerIds, string message) {
-            var options = new NotificationCreateOptions();
-            options.AppId = System.Guid.Parse(Environment.GetEnvironmentVariable("ONESIGNAL_APP_ID"));
-            options.IncludedSegments = TargetSegments;
-            options.IncludePlayerIds = TargetPlayerIds;
-            options.Data = new Dictionary<string, string>() { {"message", message} };
-            options.Contents.Add("en", message);
+        public async Task<bool> createNotificationAsync (List<string> TargetPlayerIds, string message) {
+            using (HttpClient client = new HttpClient()) {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            return client.Notifications.Create(options);
+                var requestBody = new {
+                    app_id = System.Guid.Parse(Environment.GetEnvironmentVariable("ONESIGNAL_APP_ID")),
+                    include_player_ids = TargetPlayerIds.ToArray(),
+                    data = new { tag = "message" },
+                    contents = new { en = "Notification message here..." }
+                };
+
+                var response = await client.PostAsJsonAsync(Environment.GetEnvironmentVariable("ONESIGNAL_NOTIFICATION_CREATE_URL"), requestBody);
+                string Content = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine("Notification sent response " + Content);
+                if (response.IsSuccessStatusCode) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
         }
     }
 }
