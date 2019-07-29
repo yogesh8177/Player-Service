@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>Register</head>
+<body>
+    <h1>Register</h1>
+    <ul>
+        <li><input type="text" name="username" id="username" placeholder="User name" required></li>
+        <li><input type="email" name="email" id="email" placeholder="someone@domain.com" required></li>
+        <li><input type="password" name="password" id="password" placeholder="Password" required></li>
+        <li>
+            <select name="device" id="device" required>
+                <option value="">Select</option>
+                <option value="android">Android</option>
+                <option value="ios">iOS</option>
+            </select>
+        </li>
+        <li><button name="submitButton" onclick="register()">Register</button></li>
+    </ul>
+
+    <script>
+        function register() {
+            let userName = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let device = document.getElementById("device").value;
+
+            let requestPayload = {
+                name: userName,
+                email,
+                password,
+                device
+            };
+
+            (async () => {
+                const rawResponse = await fetch('https://localhost:5001/api/users', {
+                    method: 'POST',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestPayload)
+                });
+                const response = await rawResponse.json();
+                window.alert('User registered');
+                console.log('response', response);
+            })();
+        }
+    </script>
+</body>
