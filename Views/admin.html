@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>Admin Pamel</head>
+<body>
+    <h1>Admin Panel</h1>
+    <ul>
+        <li><label>Sender:</label><br/><input type="text" id="sender" name="sender" placeholder="System"></li>
+        <li><label>Notification:</label><br/><textarea rows="4" cols="50" id="text" name="text" placeholder="Notification message..."></textarea></li>
+        <li><label>Send via chat:</label>
+            <select name="chat" id="chat">
+                <option value="false">Select</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </li>
+        <li><label>Send via notification:</label>
+            <select name="notification" id="notification">
+                <option value="false">Select</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </li>
+        <li><label>Dynamic query:</label> <input type="text" name="dynamicQuery" id="dynamicQuery" placeholder="dynamic query"></li>
+        <li><button name="submitButton" onclick="postMessage()">Send Message</button></li>
+    </ul>
+    <script>
+        function postMessage() {
+            console.log("clicked");
+            let sender = document.getElementById("sender").value;
+            let notificationText = document.getElementById("text").value;
+            let sendViaChat = document.getElementById("chat").value;
+            let sendViaNotification = document.getElementById("notification").value;
+            let dynamicQuery = document.getElementById("dynamicQuery").value;
+
+            let requestPayload = {
+                sender,
+                text: notificationText,
+                chat: sendViaChat,
+                notification: sendViaNotification,
+                queryConditions: dynamicQuery
+            };
+
+            (async () => {
+                const rawResponse = await fetch('https://localhost:5001/api/message', {
+                    method: 'POST',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestPayload)
+                });
+                const response = await rawResponse.json();
+                console.log(response);
+            })();
+        }
+    </script>
+</body>
