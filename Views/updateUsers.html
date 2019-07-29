@@ -66,6 +66,13 @@
                     },
                     body: JSON.stringify(requestPayload)
                 });
+                if (rawRespnse.status === 200) {
+                    window.alert('user updated');
+                }
+                else {
+                    window.alert('Some error occurred');
+                }
+                console.log(rawRespnse);
             })();
         }
     </script>

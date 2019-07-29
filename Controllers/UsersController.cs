@@ -57,7 +57,7 @@ namespace Player_Service.Controllers
 
             _userService.Update(id, userIn);
 
-            return NoContent();
+            return Ok();
         }
 
         // DELETE api/user/5
