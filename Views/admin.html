@@ -48,7 +48,8 @@
                     },
                     body: JSON.stringify(requestPayload)
                 });
-                if (rawResponse.status === 200)
+                console.log('raw', rawResponse);
+                if (rawResponse.status === 201)
                     window.alert('Message sent');
                 const response = await rawResponse.json();
                 console.log(response);
