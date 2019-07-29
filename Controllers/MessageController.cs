@@ -57,7 +57,6 @@ namespace Player_Service.Controllers
             List<User> users = await _userService.GetUsersViaConditionsAsync(message.QueryConditions);
             Console.WriteLine("total users" + users.Count);
             if (users.Count > 0) {
-                if (message.Notification) {
                     List<string> oneSignalIds = new List<string>();
                     foreach (var u in users) {
                         var sendBirdObject = u.Integrations[0].AsBsonDocument;
@@ -73,9 +72,10 @@ namespace Player_Service.Controllers
                             await _chatService.sendSystemChatMessageAsync(channelUrl, message.Text);
                         }
                     }
-                    var result = _notificationService.createNotificationAsync(oneSignalIds, message.Text);
-                    Console.Write("notification result " + result);
-                } 
+                    if (message.Notification) {
+                        var result = _notificationService.createNotificationAsync(oneSignalIds, message.Text);
+                        Console.Write("notification result " + result);
+                    } 
             }
             else {
                 // no users that exists in the given criteria
