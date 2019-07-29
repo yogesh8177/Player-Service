@@ -65,7 +65,6 @@ namespace Player_Service.Controllers
                         string oneSignalId = oneSignalObject.Elements.First().Value.ToString();
                         string channelUrl = sendBirdObject.Elements.Last().Value.ToString();
                         string userAccessToken = sendBirdObject.Elements.First().Value.ToString();
-                        Console.WriteLine("userAccessToken " + userAccessToken);
                         
                         oneSignalIds.Add(oneSignalId);
                         if (message.Chat) {
