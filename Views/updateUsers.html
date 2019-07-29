@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>Update Users</head>
+<body>
+    <h1>Update users</h1>
+    <ul>
+        <li><label>Name: </label><input type="text" name="username" id="username" placeholder="User name"></li>
+        <li><label>Email: </label><input type="email" name="email" id="email" placeholder="someone@domain.com"></li>
+        <li><label>Password</label><input type="password" name="password" id="password" placeholder="Password"></li>
+        <li><label>Level: </label><input type="number" name="level" id="level" placeholder="10"></li>
+        <li><label>Purchases: </label><input type="number" name="purchases" id="purchases" placeholder="5"></li>
+        <li><label>Device: </label>
+            <select name="device" id="device">
+                <option value="">Select</option>
+                <option value="android">Android</option>
+                <option value="ios">iOS</option>
+            </select>
+        </li>
+        <li><button name="submitButton" onclick="update()">Update</button></li>
+    </ul>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        let Id = params.get("Id");
+        (async () => { 
+            const rawResponse = await fetch(`https://localhost:5001/api/users/${Id}`, {
+                    method: 'GET',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    }
+                });
+
+                const response = await rawResponse.json();
+                console.log('fetched user details', response);
+
+                document.getElementById('username').value = response.Name;
+                document.getElementById('email').value = response.Email;
+                document.getElementById('password').value = response.Password;
+                document.getElementById('level').value = response.Level;
+                document.getElementById('purchases').value = response.Purchases;
+                document.getElementById('device').value = response.Device;
+        })();
+
+        function update() {
+            let username  = document.getElementById('username').value;
+            let email     = document.getElementById('email').value;
+            let password  = document.getElementById('password').value;
+            let level     = document.getElementById('level').value;
+            let purchases = document.getElementById('purchases').value;
+            let device    = document.getElementById('device').value;
+
+            let requestPayload = {
+                name: username,
+                email,
+                password,
+                level,
+                purchases,
+                device
+            };
+
+            (async () => {
+                const rawRespnse = await fetch(`https://localhost:5001/api/users/${Id}`, {
+                    method: 'PUT',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestPayload)
+                });
+            })();
+        }
+    </script>
+</body>

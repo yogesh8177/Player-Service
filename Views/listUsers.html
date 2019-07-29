@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>List users</head>
+<body>
+    <h1>Users List</h1>
+    <ul id="usersListHolder">
+    </ul>
+
+    <script>
+        (async () => {
+            const rawResponse = await fetch('https://localhost:5001/api/users', {
+                    method: 'GET',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    }
+                });
+
+                const response = await rawResponse.json();
+                console.log('response', response);
+                let usersListHolder = document.getElementById("usersListHolder");
+
+                response.forEach(item => {
+                    let node = document.createElement('li');
+                    let textNode = document.createTextNode(`${item.Name} level: ${item.Level} purchases: ${item.Purchases} `);
+                    let linkNode = document.createElement('a');
+                    linkNode.setAttribute('href', `./updateUsers.html?Id=${item.Id}`);
+                    linkNode.innerText = 'edit';
+
+                    node.appendChild(textNode);
+                    node.appendChild(linkNode);
+                    document.getElementById('usersListHolder').appendChild(node);
+                });
+        })();
+    </script>
+</body>
