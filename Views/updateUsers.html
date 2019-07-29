@@ -17,11 +17,14 @@
         </li>
         <li><button name="submitButton" onclick="update()">Update</button></li>
     </ul>
+    <hr/>
+    <a href="./listUsers.html" target="_blank">List users</a>
     <script>
+        let user;
         let params = (new URL(document.location)).searchParams;
         let Id = params.get("Id");
         (async () => { 
-            const rawResponse = await fetch(`https://localhost:5001/api/users/${Id}`, {
+            const rawResponse = await fetch(`http://localhost/api/users/${Id}`, {
                     method: 'GET',
                     headers: {
                     'Accept': 'application/json',
@@ -30,6 +33,7 @@
                 });
 
                 const response = await rawResponse.json();
+                user = response;
                 console.log('fetched user details', response);
 
                 document.getElementById('username').value = response.Name;
@@ -54,11 +58,13 @@
                 password,
                 level,
                 purchases,
-                device
+                device,
+                onesignal: user.OneSignal,
+                sendbird: user.SendBird
             };
 
             (async () => {
-                const rawRespnse = await fetch(`https://localhost:5001/api/users/${Id}`, {
+                const rawRespnse = await fetch(`http://localhost/api/users/${Id}`, {
                     method: 'PUT',
                     headers: {
                     'Accept': 'application/json',

@@ -9,7 +9,7 @@ services:
       - "27017:27017"
 
   lb:
-    image: nginx:stable
+    image: nginx:1.17.2-alpine
     volumes: 
       - ./Views:/var/www/html/
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf 

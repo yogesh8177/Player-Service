@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>Admin Pamel</head>
+<head>Admin Panel</head>
 <body>
     <h1>Admin Panel</h1>
     <ul>
@@ -40,7 +40,7 @@
             };
 
             (async () => {
-                const rawResponse = await fetch('https://localhost:5001/api/message', {
+                const rawResponse = await fetch('http://localhost/api/message', {
                     method: 'POST',
                     headers: {
                     'Accept': 'application/json',
@@ -48,6 +48,8 @@
                     },
                     body: JSON.stringify(requestPayload)
                 });
+                if (rawResponse.status === 200)
+                    window.alert('Message sent');
                 const response = await rawResponse.json();
                 console.log(response);
             })();

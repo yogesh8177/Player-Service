@@ -22,6 +22,17 @@ namespace Player_Service.Models
 
         public string Device { get; set; }
 
-        public BsonDocument Integrations { get; set; }
+        public SendBirdIntegration SendBird { get; set; }
+
+        public OneSignalIntegration OneSignal { get; set; }
+    }
+
+    public class SendBirdIntegration {
+        public string AccessToken { get; set; }
+        public string SystemChannelUrl { get; set; }
+    }
+
+    public class OneSignalIntegration {
+        public string OneSignalId { get; set; }
     }
 }

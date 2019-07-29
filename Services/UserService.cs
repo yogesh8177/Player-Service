@@ -67,14 +67,10 @@ namespace Player_Service.Services {
                     var jsonResponse = JsonConvert.DeserializeObject<SendBirdRegistrationResponse>(Content);
                     string accessToken = jsonResponse.access_token;
                     string channelUrl = await this.createAdminChatChannelAsync(user);
-                    user.Integrations = new MongoDB.Bson.BsonDocument {
-                        { 
-                            "sendBird", new MongoDB.Bson.BsonDocument {
-                                { "access_token", accessToken },
-                                { "system_channel_url", channelUrl }
-                            } 
-                        }
-                    };
+                    var sendBirdIntegration = new SendBirdIntegration();
+                    sendBirdIntegration.AccessToken = accessToken;
+                    sendBirdIntegration.SystemChannelUrl = channelUrl;
+                    user.SendBird = sendBirdIntegration;
                 }
                 else {
                     // Lets not handle this for now
@@ -124,7 +120,9 @@ namespace Player_Service.Services {
                     var jsonResponse = JsonConvert.DeserializeObject<OneSignalRegistrationResponse>(Content);
                     if (jsonResponse.success) {
                         string id = jsonResponse.id;
-                        user.Integrations.Add("OneSignal", new MongoDB.Bson.BsonDocument { { "onesignal_id", id } });
+                        var oneSignalIntegration = new OneSignalIntegration();
+                        oneSignalIntegration.OneSignalId = id;
+                        user.OneSignal = oneSignalIntegration;
                         this.Update(user.Id.ToString(), user);
                     }
                 }
@@ -138,13 +136,15 @@ namespace Player_Service.Services {
         public UpdateResult Update(string id, User userIn) 
         {
             var updateDef = Builders<User>.Update
-                            .Set("UserName", userIn.UserName)
-                            .Set("Email", userIn.Email)
-                            .Set("Level", userIn.Level)
-                            .Set("Purchases", userIn.Purchases)
-                            .Set("Device", userIn.Device)
-                            .Set("Integrations", userIn.Integrations)
-                            .Set("Password", userIn.Password);
+                            .Set(u => u.UserName, userIn.UserName)
+                            .Set(u => u.Email, userIn.Email)
+                            .Set(u => u.Level, userIn.Level)
+                            .Set(u => u.Purchases, userIn.Purchases)
+                            .Set(u => u.Device, userIn.Device)
+                            .Set(u => u.Password, userIn.Password)
+                            .Set(u => u.SendBird, userIn.SendBird)
+                            .Set(u => u.OneSignal, userIn.OneSignal);
+
             return _users.UpdateOne(user => user.Id == id, updateDef);
         }
         public void Remove(string id) => 

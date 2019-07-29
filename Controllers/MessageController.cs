@@ -59,12 +59,10 @@ namespace Player_Service.Controllers
             if (users.Count > 0) {
                     List<string> oneSignalIds = new List<string>();
                     foreach (var u in users) {
-                        var sendBirdObject = u.Integrations[0].AsBsonDocument;
-                        var oneSignalObject = u.Integrations[1].AsBsonDocument;
         
-                        string oneSignalId = oneSignalObject.Elements.First().Value.ToString();
-                        string channelUrl = sendBirdObject.Elements.Last().Value.ToString();
-                        string userAccessToken = sendBirdObject.Elements.First().Value.ToString();
+                        string oneSignalId = u.OneSignal.OneSignalId;
+                        string channelUrl = u.SendBird.SystemChannelUrl;
+                        string userAccessToken = u.SendBird.AccessToken;
                         
                         oneSignalIds.Add(oneSignalId);
                         if (message.Chat) {

@@ -7,7 +7,7 @@
 
     <script>
         (async () => {
-            const rawResponse = await fetch('https://localhost:5001/api/users', {
+            const rawResponse = await fetch('http://localhost/api/users', {
                     method: 'GET',
                     headers: {
                     'Accept': 'application/json',
@@ -21,7 +21,7 @@
 
                 response.forEach(item => {
                     let node = document.createElement('li');
-                    let textNode = document.createTextNode(`${item.Name} level: ${item.Level} purchases: ${item.Purchases} `);
+                    let textNode = document.createTextNode(`${item.Name} level: ${item.Level} purchases: ${item.Purchases} device: ${item.Device} `);
                     let linkNode = document.createElement('a');
                     linkNode.setAttribute('href', `./updateUsers.html?Id=${item.Id}`);
                     linkNode.innerText = 'edit';
