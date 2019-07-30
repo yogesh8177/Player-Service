@@ -48,6 +48,38 @@ This service is used for realtime chat with other players. In our case this will
 
 This service will help in sending notifications via best effort mechanism.
 
+## Project setup
+
+### Env variables
+
+We need following env variables to run our project.
+
+```
+## Chat message integration creds for SendBird
+SENDBIRD_APP_ID=appId
+SENDBIRD_API_TOKEN=token
+SENDBIRD_API_REQUEST_URL=https://api-{app-id}.sendbird.com
+
+## Push notification integration creds for OneSignal
+ONESIGNAL_APP_ID=appId
+ONESIGNAL_API_KEY=apikey
+ONESIGNAL_DEVICE_REGISTER_URL=https://onesignal.com/api/v1/players
+ONESIGNAL_NOTIFICATION_CREATE_URL=https://onesignal.com/api/v1/notifications
+
+## System admin user Id. This userId must already exist, so it must be created manually via SendBird dashboard
+SYSTEM_ADMIN_USER_ID=admin
+```
+
+### Accessing UI
+
+Browse following urls to access the respective UI screens.
+
+1. Registration page: `http://localhost` which is the default page.
+1. List users page `http://localhost/listUsers.html`
+1. Update users page `http://localhost/updateUsers.html?Id=${userId}`
+1. Admin message page `http://localhost/admin.html`
+
+
 ## Steps to run
 
 1. `cd $PROJECT_ROOT`
