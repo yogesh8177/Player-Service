@@ -75,9 +75,9 @@ SYSTEM_ADMIN_USER_ID=admin
 Browse following urls to access the respective UI screens.
 
 1. Registration page: `http://localhost` which is the default page.
-1. List users page `http://localhost/listUsers.html`
-1. Update users page `http://localhost/updateUsers.html?Id=${userId}`
-1. Admin message page `http://localhost/admin.html`
+1. List users page `http://localhost/listUsers.html`.
+1. Update users page `http://localhost/updateUsers.html?Id=${userId}`.
+1. Admin message page `http://localhost/admin.html` to send dynamic notifications.
 
 
 ## Steps to run
